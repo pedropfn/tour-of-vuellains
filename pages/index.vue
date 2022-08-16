@@ -1,87 +1,126 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
-      </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
+  <v-card elevation="2">
+    <v-card-title>Vuellain</v-card-title>
+    <v-card-subtitle>{{ villain.firstName }}</v-card-subtitle>
+    <v-card-text>
+      <v-form>
+        <v-container>
+          <v-row>
+            <v-text-field
+              id="id"
+              v-model="villain.id"
+              label="Id"
+              readonly
+            ></v-text-field>
+          </v-row>
+          <v-row>
+            <v-text-field
+              id="firstName"
+              v-model="villain.firstName"
+              label="First Name"
+            />
+          </v-row>
+          <v-row>
+            <v-text-field
+              id="lastName"
+              v-model="villain.lastName"
+              label="Last Name"
+            />
+          </v-row>
+          <v-row>
+            <v-textarea
+              id="description"
+              v-model="villain.description"
+              rows="2"
+              label="Description"
+            />
+          </v-row>
+          <v-row>
+            <v-radio-group v-model="villain.capeColor" label="Cape Color" row>
+              <v-radio
+                id="color-red"
+                value="red"
+                label="Red"
+                color="red"
+              ></v-radio>
+              <v-radio
+                id="color-blue"
+                value="blue"
+                label="Blue"
+                color="blue"
+              ></v-radio>
+              <v-radio
+                id="color-green"
+                value="green"
+                label="Green"
+                color="green"
+              ></v-radio>
+            </v-radio-group>
+          </v-row>
+          <v-row>
+            <v-select
+              id="power"
+              v-model="villain.power"
+              :items="powers"
+              label="Super Power"
+              hint="Please select one"
+              @keyup.esc="clearPower"
             >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire"> Continue </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-col>
-  </v-row>
+            </v-select>
+          </v-row>
+          <v-row>
+            <v-checkbox id="active" v-model="villain.active" label="Active" />
+          </v-row>
+        </v-container>
+      </v-form>
+    </v-card-text>
+    <v-divider class="mx-4"></v-divider>
+    <v-container>
+      <v-card-actions>
+        <v-btn @click="cancelvillain()">
+          <span>Cancel</span>
+        </v-btn>
+        <v-btn @click="savevillain()">
+          <span>Save</span>
+        </v-btn>
+      </v-card-actions>
+    </v-container>
+    <v-divider class="mx-4"></v-divider>
+    <v-card-text class="notification is-info">
+      <pre>{{ message }}</pre>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>
 export default {
   name: 'IndexPage',
+  data() {
+    return {
+      villain: {
+        id: 20,
+        firstName: 'Toya',
+        lastName: 'Todoroki',
+        description: 'Fogo azul',
+        capeColor: 'blue',
+        power: '',
+        active: true,
+      },
+      powers: ['Speed', 'Flight', 'Strength', 'Invisibility', 'Fire', ''],
+      message: '',
+    }
+  },
+  methods: {
+    cancelvillain() {
+      this.message = ''
+    },
+    clearPower() {
+      this.villain.power = ''
+    },
+    savevillain() {
+      // This only updates when you click the save button
+      this.message = JSON.stringify(this.villain, null, '\n ')
+    },
+  },
 }
 </script>
