@@ -1,6 +1,12 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer :mini-variant="miniVariant" clipped="true" fixed app>
+    <v-navigation-drawer
+      v-model="drawer"
+      :mini-variant="miniVariant"
+      :clipped="clipped"
+      fixed
+      app
+    >
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
@@ -18,7 +24,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar clipped-left="false" fixed app>
+    <v-app-bar :clipped-left="clipped" fixed app>
       <v-btn icon @click.stop="miniVariant = !miniVariant">
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
@@ -30,7 +36,7 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer absolute app>
+    <v-footer :absolute="!fixed" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
   </v-app>
@@ -41,14 +47,23 @@ export default {
   name: 'DefaultLayout',
   data() {
     return {
+      clipped: true,
+      drawer: true,
+      fixed: true,
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Home',
+          title: 'Welcome',
           to: '/',
         },
+        {
+          icon: 'mdi-pencil',
+          title: 'Villain Edit',
+          to: '/VillainEdit',
+        },
       ],
-      miniVariant: false,
+      miniVariant: true,
+      right: true,
       title: 'Tuor of Vuellains',
     }
   },
