@@ -61,10 +61,15 @@ export default {
           title: 'Villain Edit',
           to: '/VillainEdit',
         },
+        {
+          icon: 'mdi-list-box',
+          title: 'Villains List',
+          to: '/VillainList',
+        },
       ],
       miniVariant: true,
       right: true,
-      title: 'Tuor of Vuellains',
+      title: 'Tour of Vuellains',
     }
   },
 }
