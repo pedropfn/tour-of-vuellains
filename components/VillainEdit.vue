@@ -1,5 +1,5 @@
 <template>
-  <v-card elevation="2">
+  <v-container elevation="2">
     <v-card-title>Vuellain</v-card-title>
     <v-card-subtitle>{{ fullName }}</v-card-subtitle>
     <v-card-text>
@@ -147,7 +147,6 @@
         </v-container>
       </v-form>
     </v-card-text>
-    <v-divider class="mx-4"></v-divider>
     <v-container>
       <v-card-actions>
         <v-btn color="error" tile @click="cancelVillain()">
@@ -160,38 +159,25 @@
         </v-btn>
       </v-card-actions>
     </v-container>
-    <v-divider class="mx-4"></v-divider>
-    <v-card-text>
-      <pre>{{ message }}</pre>
-    </v-card-text>
-  </v-card>
+  </v-container>
 </template>
 
 <script>
 import { format, parseISO } from 'date-fns'
 
-const inputDateFormat = 'yyyy-MM-dd'
 const displayDateFormat = 'MM/dd/yyyy'
 
 export default {
   name: 'VillainEdit',
+  props: {
+    editVillain: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
-      villain: {
-        id: 10,
-        firstName: 'Toya',
-        lastName: 'Todoroki',
-        description: 'Blue flame Dabi',
-        capeColor: 'blue',
-        power: '',
-        active: true,
-        crimeCounter: 4,
-        crimeRank: '',
-        originDate: format(
-          parseISO(new Date(1996, 5, 1).toISOString()),
-          inputDateFormat
-        ),
-      },
+      villain: { ...this.editVillain },
       powers: ['Speed', 'Flight', 'Strength', 'Invisibility', 'Fire'],
       message: '',
       menu: false,
@@ -215,13 +201,13 @@ export default {
   },
   methods: {
     cancelVillain() {
-      this.message = ''
+      this.$emit('cancel')
+    },
+    saveVillain() {
+      this.$emit('save', this.editVillain)
     },
     clearPower() {
       this.villain.power = ''
-    },
-    saveVillain() {
-      this.message = JSON.stringify(this.villain, null, '\n ')
     },
     handleCrimes(newRank) {
       const rank = parseInt(newRank, 10)

@@ -56,16 +56,6 @@ export default {
           title: 'Welcome',
           to: '/',
         },
-        {
-          icon: 'mdi-pencil',
-          title: 'Villain Edit',
-          to: '/VillainEdit',
-        },
-        {
-          icon: 'mdi-list-box',
-          title: 'Villains List',
-          to: '/VillainList',
-        },
       ],
       miniVariant: true,
       right: true,
